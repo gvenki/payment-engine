@@ -1,5 +1,6 @@
 import pandas as pd
 from collections import defaultdict
+import sys
 
 
 class Account:
@@ -14,9 +15,7 @@ class Account:
         self.locked = locked
 
     def __str__(self):
-        return "client: %s, available: %s, held: %s, total: %s, locked: %s" % (self.client, self.available,
-                                                                               self.held, self.total,
-                                                                               self.locked)
+        return ', '.join([str(self.client), str(self.available), str(self.held), str(self.total), str(self.locked)])
 
 
 def deposit(accounts: dict, client_id: int, amount: float):
@@ -27,8 +26,7 @@ def deposit(accounts: dict, client_id: int, amount: float):
 def withdraw(accounts: dict, client_id: int, amount: float):
     if accounts[client_id].available > float(amount):
         accounts[client_id].available -= float(amount)
-    else:
-        pass
+    # else:
         # print("Withdrawal Failed for client : %s for amount: %s " % (client_id, amount))
     accounts[client_id].total = accounts[client_id].available + accounts[client_id].held
 
@@ -92,11 +90,19 @@ def calculate_balance(accounts: dict, tx_df: pd.DataFrame, each_user: int):
 
 
 def main():
+    input_file = ''
+    print(input_file)
+    try:
+        input_file = sys.argv[1]
+    except IndexError:
+        print("Please input path to transaction.csv")
+        raise
     accounts = defaultdict(Account)
-    transactions = pd.read_csv(r'../transactions.csv', sep=r',', skipinitialspace=True)
+    transactions = pd.read_csv(input_file, sep=r',', skipinitialspace=True)
     for each_user in set(transactions['client']):
         calculate_balance(accounts, transactions.loc[transactions['client'] == each_user], each_user)
     print('''################################ Final Account Overview ################################''')
+    print("client, available, held, total, locked")
     for key, value in accounts.items():
         print(value)
 

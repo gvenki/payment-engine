@@ -4,7 +4,7 @@ from collections import defaultdict
 import logging
 
 
-sys.path.append('../project')
+sys.path.append('../engine')
 from main_engine import deposit, Account, withdraw, dispute
 
 
