@@ -24,7 +24,7 @@ python .\engine\main_engine.py  .\transactions.csv
 ```
 `trasactions.csv` is a file with the columns type , client , tx , and amounta
 
-To run the test cases 
+### To run the test cases 
 ```
 cd tests
 python -m unittest test.py
@@ -47,17 +47,17 @@ client, available, held, total, locked
 2, 2.0, 0.0, 2.0, False
 ```
 
-#### For test cases
+#### Output for test cases
 ```
 Ran 3 tests in 0.001s
 OK
 ```
 ## Assumptions
 These are the assumptions I made to complete the task
-```
-- python3 and pip are installed and available to execute
+
+- python3, pip are installed and available to execute
 - Dispute occurs only after a sucessful withdrawl
 - ChargeBack cannot happen to settled (Resolved) transactions
 - Once the account is locked, all transactions including deposits are locked (ignored)
 - If charge back occurs on 2nd trasaction after 5th transaction, account is locked but the transactions from 3 to 5 happen and are not voided
-```
+
